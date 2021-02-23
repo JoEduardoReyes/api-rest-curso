@@ -50,6 +50,13 @@ switch ( strtoupper($_SERVER['REQUEST_METHOD'])) {
     }
     break;
   case 'POST':
+    $json = file_get_contents('php://input');
+    //hacemos que el server lea el archivo json
+    $books[] = json_decode($json, true);
+    //hacemos que se agrege el nuevo json a $books
+    // echo array_keys( $books )[ count($books) - 1];
+    //hacemos que el agregado se agregue despues del ultimo elemento existente
+    echo json_encode( $books );
     break;
   case 'PUT':
     break;
