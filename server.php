@@ -1,4 +1,12 @@
 <?php
+//creamos variables para el usuario y la constraseña
+$user = array_key_exists('PHP_AUTH_USER', $_SERVER ) ?  $_SERVER['PHP_AUTH_USER'] : '';
+$pwd= array_key_exists('PHP_AUTH_PW', $_SERVER ) ?  $_SERVER['PHP_AUTH_PW'] : '';
+
+//validamos si son correctas
+if ( $user !== 'mauro' || $pwd !== '1234') {
+  die;
+}
 
 //Definimos los recursos dispoibles
 $allowedResourceTypes = [
