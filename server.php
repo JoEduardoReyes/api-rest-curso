@@ -1,33 +1,33 @@
 <?php
 
-if ( !array_key_exists( 'HTTP_X_TOKEN', $_SERVER ) ) {
+// if ( !array_key_exists( 'HTTP_X_TOKEN', $_SERVER ) ) {
 
-  die;
-}
+//   die;
+// }
 
-$url = 'http://localhost:8001';
+// $url = 'http://localhost:8001';
 
-$ch = curl_init( $url );
-curl_setopt(
-  $ch,
-  CURLOPT_HTTPHEADER,
-  [
-    "x-Token: {$_SERVER['HTTP_X_TOKEN']}",
-  ]
-  );
+// $ch = curl_init( $url );
+// curl_setopt(
+//   $ch,
+//   CURLOPT_HTTPHEADER,
+//   [
+//     "x-Token: {$_SERVER['HTTP_X_TOKEN']}",
+//   ]
+//   );
 
-curl_setopt(
-  $ch,
-  CURLOPT_RETURNTRANSFER,
-  true
-);
+// curl_setopt(
+//   $ch,
+//   CURLOPT_RETURNTRANSFER,
+//   true
+// );
 
-$ret = curl_exec($ch);
+// $ret = curl_exec($ch);
 
-if ($ret !== 'true') {
+// if ($ret !== 'true') {
 
-  die;
-};
+//   die;
+// };
 
 
 //Definimos los recursos dispoibles
@@ -41,6 +41,8 @@ $allowedResourceTypes = [
 $resourceType = $_GET['resource_type'];
 
 if(!in_array($resourceType, $allowedResourceTypes)) {
+  http_response_code( 400 );
+
   die;
 }
 
@@ -76,6 +78,8 @@ switch ( strtoupper($_SERVER['REQUEST_METHOD'])) {
     } else {
       if (array_key_exists($resourceID, $books)) {
         echo json_encode($books[$resourceID]);
+      } else {
+        http_response_code( 404 );
       }
     }
     break;
