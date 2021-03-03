@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody></tbody>
-      <input type="button" value="Cargar libros" />
+      <input type="button" value="Cargar libros" id="loadBooks" />
       <div style="display: none" id="messages">
         <p></p>
       </div>
@@ -55,4 +55,38 @@
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
     crossorigin="anonymous"
   ></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"
+  ></script>
+  <script type="text/javascript">
+    $("#loadBooks").click(function () {
+      $("#messages").first("p").text("Cargando libros...");
+      $("#messages").show();
+      $.ajax({
+        url: "http://localhost:8000/books",
+        success: function (data) {
+          $("#messages").hide();
+          $("#booksTable > tbody").empty();
+          for (b in data) {
+            addBook(data[b]);
+          }
+          $("#bookForm").show();
+        },
+      });
+    });
+
+    function addBook(book) {
+      $("#booksTable tr:last").after(
+        "<tr><td>" +
+          book.titulo +
+          "</td><td>" +
+          book.id_autor +
+          "</td><td>" +
+          book.id_genero +
+          "</td></tr>"
+      );
+    }
+  </script>
 </html>
