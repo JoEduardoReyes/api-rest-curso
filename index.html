@@ -51,15 +51,16 @@
     </table>
   </body>
   <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-    crossorigin="anonymous"
-  ></script>
-  <script
     src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
     crossorigin="anonymous"
   ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"
+  ></script>
+
   <script type="text/javascript">
     $("#loadBooks").click(function () {
       $("#messages").first("p").text("Cargando libros...");
@@ -88,5 +89,25 @@
           "</td></tr>"
       );
     }
+
+    $("#bookSave").click(function () {
+      var newBook = {
+        titulo: $("#bookTitle").val(),
+        id_autor: $("#bookAuthorID").val(),
+        id_genero: $("#bookGenreID").val(),
+      };
+      $("#messages").first("p".text).text("Guardando Libro...");
+      $("#messages").show();
+
+      $.ajax({
+        url: "http://localhost:8000/books",
+        method: "POST",
+        data: JSON.stringify(newBook),
+        success: function (data) {
+          $("#messages").hide();
+          addBook(newBook);
+        },
+      });
+    });
   </script>
 </html>
